@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OurSchoolApi.Data;
+using OurSchoolApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>(opt => {
+builder.Services.AddIdentityApiEndpoints<User>(opt => {
     opt.User.RequireUniqueEmail = true;
     opt.SignIn.RequireConfirmedEmail = false;
     opt.Password.RequiredLength = 4;
@@ -36,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGroup("/api").MapIdentityApi<IdentityUser>();
+app.MapGroup("/api").MapCustomIdentityApi<User>();
 app.MapControllers();
 
 app.Run();

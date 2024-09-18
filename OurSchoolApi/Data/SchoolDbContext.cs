@@ -5,7 +5,7 @@ using OurSchoolApi.Models;
 
 namespace OurSchoolApi.Data
 {
-    public class SchoolDbContext: IdentityDbContext<IdentityUser>
+    public class SchoolDbContext: IdentityDbContext<User>
     {
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options): base(options)
         {
@@ -13,6 +13,7 @@ namespace OurSchoolApi.Data
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Classroom> Classrooms { get; set; }
+        public override DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
